@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
 
-  elasticsearch:
+  elasticsearch-oss:
     build:
       context: elasticsearch/
     volumes:
@@ -15,22 +15,7 @@ services:
     networks:
       - elk
 
-  logstash:
-    build:
-      context: logstash/
-    volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-    ports:
-      - "5000:5000"
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
-
-  kibana:
+  kibana-oss:
     build:
       context: kibana/
     volumes:
@@ -40,7 +25,7 @@ services:
     networks:
       - elk
     depends_on:
-      - elasticsearch
+      - elasticsearch-oss
 
 networks:
 
